@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Jubilee Celebration - Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #d4af37;
+            --secondary: #8b4513;
+            --dark: #1a1a1a;
+            --light: #f8f8f8;
+            --accent: #c0a062;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .header-image {
+            width: 100%;
+            height: 300px;
+            background-color: #333;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--dark));
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .logo h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo p {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--primary);
+        }
+        
+        .card-header i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .card-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--light);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .result-container {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .result-card {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .result-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .table-members {
+            margin-top: 1.5rem;
+        }
+        
+        .table-members h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .member-list {
+            list-style: none;
+        }
+        
+        .member-item {
+            padding: 10px 15px;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .member-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .member-id {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .member-name {
+            flex-grow: 1;
+            margin-left: 1rem;
+        }
+
+        /* Sponsors Section */
+        .sponsors-section {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .sponsors-section h3 {
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .sponsors-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .sponsor-logo {
+            width: 120px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .sponsor-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(30%) brightness(1.2);
+            transition: all 0.3s ease;
+        }
+        
+        .sponsor-logo:hover img {
+            filter: grayscale(0%) brightness(1.5);
+            transform: scale(1.05);
+        }
+        
+        .sponsor-logo .placeholder {
+            position: absolute;
+            color: rgba(212, 175, 55, 0.3);
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+        
+        .sponsor-logo img[src] + .placeholder {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .sponsors-grid {
+                gap: 1rem;
+            }
+            
+            .sponsor-logo {
+                width: 90px;
+                height: 60px;
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            color: var(--accent);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Animations */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.6);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .logo p {
+                font-size: 1rem;
+            }
+            
+            .card-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .header-image {
+                height: 200px;
+            }
+        }
+        
+        /* Admin specific styles */
+        .admin-panel {
+            display: none;
+        }
+        
+        .tables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .table-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .table-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .table-card h3 i {
+            font-size: 1.2rem;
+        }
+        
+        .table-members-admin {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+        
+        .table-members-admin .member-item {
+            padding: 8px 12px;
+            margin-bottom: 0.3rem;
+        }
+        
+        .remove-member {
+            color: #ff6b6b;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .remove-member:hover {
+            color: #ff3b3b;
+            transform: scale(1.2);
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .admin-actions .btn {
+            flex: 1;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: var(--dark);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-header h2 {
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
+        }
+        
+        .select-table {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Footer Contact Icons */
+.contact-link {
+    color: var(--accent);
+    text-decoration: none;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+.phone-icon {
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.whatsapp-icon {
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+.contact-link:hover {
+    color: var(--primary);
+    transform: scale(1.2);
+}
+    </style>
+</head>
+<body>
+    <!-- Confetti Animation -->
+    <canvas class="confetti" id="confetti"></canvas>
+    
+    <!-- Header Image Placeholder -->
+    <div class="header-image" id="headerImage">
+        <!-- Image will be placed here -->
+    </div>
+    
+    <div class="container">
+        <div class="logo">
+            <h1>Golden Jubilee Celebration</h1>
+            <p>50th Birthday Celebration of Chituru & Iheanyi</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Verification Section -->
+            <div class="card fade-in">
+                <div class="card-header">
+                    <i class="fas fa-search"></i>
+                    <h2>Find Your Table</h2>
+                </div>
+                <div class="form-group">
+                    <label for="attendeeId">Enter Your Registration Number</label>
+                    <input type="text" id="attendeeId" class="form-control" placeholder="e.g. CHI-IHE000101">
+                </div>
+                <button id="verifyBtn" class="btn btn-block">Find My Table</button>
+                
+                <div id="resultContainer" class="result-container">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <i class="fas fa-chair"></i>
+                            <h3 id="tableName">Table 1: Golden Table</h3>
+                        </div>
+                        <p>Welcome, <span id="attendeeName">John Doe</span>!</p>
+                        <div class="table-members">
+                            <h4>Table Members:</h4>
+                            <ul class="member-list" id="tableMembersList">
+                                <!-- Members will be listed here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Panel (hidden by default) -->
+            <div id="adminPanel" class="admin-panel card fade-in">
+                <div class="card-header">
+                    <i class="fas fa-user-shield"></i>
+                    <h2>Admin Panel</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newAttendeeName">Attendee Full Name</label>
+                    <input type="text" id="newAttendeeName" class="form-control" placeholder="Enter full name">
+                </div>
+                
+                <button id="generateIdBtn" class="btn btn-block">Generate Registration Number</button>
+                
+                <div id="generatedIdContainer" style="margin-top: 1rem; display: none;">
+                    <div class="form-group">
+                        <label>Generated Registration Number</label>
+                        <input type="text" id="generatedId" class="form-control" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Assign to Table</label>
+                        <select id="assignTable" class="form-control">
+                            <!-- Tables will be populated here -->
+                        </select>
+                    </div>
+                    
+                    <button id="assignBtn" class="btn btn-block">Assign to Table</button>
+                </div>
+                
+                <div class="tables-grid" id="tablesGrid">
+                    <!-- Tables will be populated here -->
+                </div>
+            </div>
+        </div>
+
+                <!-- Sponsors Section -->
+        <div class="sponsors-section">
+            <h3>Supported By</h3>
+            <div class="sponsors-grid">
+                <div class="sponsor-logo">
+                    <img src="images/kil.png" alt="Sponsor 1" onerror="this.style.display='none'">
+                    <div class="placeholder">Sponsor 1</div>
+                </div>
+                <div class="sponsor-logo">
+                    <img src="images/ast.png" alt="Sponsor 2" onerror="this.style.display='none'">
+                    <div class="placeholder">Sponsor 2</div>
+                </div>
+                <div class="sponsor-logo">
+                    <img src="images/tsoft.png" alt="Sponsor 3" onerror="this.style.display='none'">
+                    <div class="placeholder">Sponsor 3</div>
+                </div>
+                </div>
+        </div>
+
+    <div class="footer">
+    <p>© 2025 Chituru & Iheanyi Golden Jubilee Celebration. All rights reserved.</p>
+    <p>Design and hosted by Totlesoft Technologies</p>
+    <p>
+        <a href="tel:+2347064931387" class="contact-link">
+            <i class="fas fa-phone-alt phone-icon"></i>
+        </a>
+        <a href="https://wa.me/2347064931387" class="contact-link" target="_blank">
+            <i class="fab fa-whatsapp whatsapp-icon"></i>
+        </a>
+        +2347064931387
+    </p>
+</div>
+        
+        </div>
+    
+    <!-- Modal for moving attendee -->
+    <div id="moveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Move Attendee</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <p>Moving <strong id="moveAttendeeName"></strong> (<span id="moveAttendeeId"></span>)</p>
+            <select id="newTableSelect" class="select-table">
+                <!-- Tables will be populated here -->
+            </select>
+            <button id="confirmMoveBtn" class="btn">Confirm Move</button>
+        </div>
+    </div>
+    
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        // Database simulation
+        const db = {
+            attendees: [],
+            tables: [
+                { id: 'table1', name: 'Eternity Table' },
+                { id: 'table2', name: 'Burberry Table' },
+                { id: 'table3', name: 'Euphoria Table' },
+                { id: 'table4', name: 'Legend' },
+                { id: 'table5', name: 'Obsession Table' },
+                { id: 'table6', name: 'Touch Table' },
+                { id: 'table7', name: 'Chrome Table' },
+                { id: 'table8', name: 'Davidoff Table' },
+                { id: 'table9', name: 'Beautiful Table' },
+                { id: 'table10', name: 'Sauvage Table' },
+                { id: 'table11', name: 'Chanel Table' },
+                { id: 'table12', name: 'Lancome Table' },
+                { id: 'table13', name: 'Dior Table' },
+                { id: 'table14', name: 'Tomford Table' },
+                { id: 'table15', name: 'Givenchy Table' },
+                { id: 'table16', name: 'Cherry Table' },
+                { id: 'table17', name: 'Cucci Table' },
+                { id: 'table18', name: 'Cartier Table' },
+                { id: 'table19', name: 'Forever Table' },
+                { id: 'table20', name: 'Creed Table' },
+                { id: 'table21', name: 'Fendi Table' },
+                { id: 'table22', name: 'Boss Table' },
+                { id: 'table23', name: 'Jadore Table' },
+                { id: 'table24', name: 'Blue Table' },
+                { id: 'table25', name: 'Giorgio Table' },
+                
+            ],
+            lastId: 0
+        };
+
+        // Initialize the database from localStorage if available
+        function initDB() {
+            const savedDB = localStorage.getItem('birthdayDB');
+            if (savedDB) {
+                const parsedDB = JSON.parse(savedDB);
+                db.attendees = parsedDB.attendees;
+                db.lastId = parsedDB.lastId;
+            } else {
+                // Generate initial 350 IDs if no DB exists
+                if (db.attendees.length === 0) {
+                    for (let i = 1; i <= 350; i++) {
+                        const idNumber = i.toString().padStart(6, '0');
+                        db.attendees.push({
+                            id: `CHI-IHE${idNumber}`,
+                            name: '',
+                            tableId: '',
+                            assigned: false
+                        });
+                    }
+                    db.lastId = 350;
+                    saveDB();
+                }
+            }
+        }
+
+        // Save database to localStorage
+        function saveDB() {
+            localStorage.setItem('birthdayDB', JSON.stringify({
+                attendees: db.attendees,
+                lastId: db.lastId
+            }));
+        }
+
+        // Generate a new ID
+        function generateId() {
+            db.lastId++;
+            const idNumber = db.lastId.toString().padStart(6, '0');
+            return `CHI-IHE${idNumber}`;
+        }
+
+        // Find attendee by ID
+        function findAttendeeById(id) {
+            return db.attendees.find(attendee => attendee.id === id);
+        }
+
+        // Find attendees by table
+        function findAttendeesByTable(tableId) {
+            return db.attendees.filter(attendee => attendee.tableId === tableId && attendee.assigned);
+        }
+
+        // Get table by ID
+        function getTableById(tableId) {
+            return db.tables.find(table => table.id === tableId);
+        }
+
+        // Assign attendee to table
+        function assignAttendeeToTable(attendeeId, tableId) {
+            const attendee = findAttendeeById(attendeeId);
+            if (attendee) {
+                attendee.tableId = tableId;
+                attendee.assigned = true;
+                saveDB();
+                return true;
+            }
+            return false;
+        }
+
+        // Remove attendee from table
+        function removeAttendeeFromTable(attendeeId) {
+            const attendee = findAttendeeById(attendeeId);
+            if (attendee) {
+                attendee.tableId = '';
+                attendee.assigned = false;
+                saveDB();
+                return true;
+            }
+            return false;
+        }
+
+        // Move attendee to another table
+        function moveAttendee(attendeeId, newTableId) {
+            return assignAttendeeToTable(attendeeId, newTableId);
+        }
+
+        // Display verification result
+        function displayVerificationResult(attendee) {
+            if (!attendee || !attendee.assigned) {
+                showToast('Attendee not found or not assigned to a table', 'error');
+                return;
+            }
+
+            const table = getTableById(attendee.tableId);
+            if (!table) {
+                showToast('Table information not found', 'error');
+                return;
+            }
+
+            document.getElementById('tableName').textContent = table.name;
+            document.getElementById('attendeeName').textContent = attendee.name;
+            
+            const membersList = document.getElementById('tableMembersList');
+            membersList.innerHTML = '';
+            
+            const tableMembers = findAttendeesByTable(attendee.tableId);
+            tableMembers.forEach(member => {
+                const li = document.createElement('li');
+                li.className = 'member-item';
+                li.innerHTML = `
+                    <span class="member-id">${member.id}</span>
+                    <span class="member-name">${member.name}</span>
+                `;
+                membersList.appendChild(li);
+            });
+            
+            document.getElementById('resultContainer').style.display = 'block';
+        }
+
+        // Populate tables dropdown
+        function populateTablesDropdown(selectElement) {
+            selectElement.innerHTML = '';
+            db.tables.forEach(table => {
+                const option = document.createElement('option');
+                option.value = table.id;
+                option.textContent = table.name;
+                selectElement.appendChild(option);
+            });
+        }
+
+        // Render tables in admin panel
+        function renderTables() {
+            const tablesGrid = document.getElementById('tablesGrid');
+            tablesGrid.innerHTML = '';
+            
+            db.tables.forEach(table => {
+                const tableCard = document.createElement('div');
+                tableCard.className = 'table-card fade-in';
+                
+                const tableMembers = findAttendeesByTable(table.id);
+                
+                tableCard.innerHTML = `
+                    <h3><i class="fas fa-table"></i> ${table.name}</h3>
+                    <div class="table-members-admin">
+                        ${tableMembers.length > 0 ? 
+                            tableMembers.map(member => `
+                                <div class="member-item">
+                                    <span class="member-id">${member.id}</span>
+                                    <span class="member-name">${member.name}</span>
+                                    <i class="fas fa-times remove-member" data-id="${member.id}"></i>
+                                    <i class="fas fa-exchange-alt move-member" data-id="${member.id}" data-name="${member.name}"></i>
+                                </div>
+                            `).join('') : 
+                            '<p>No attendees assigned yet</p>'}
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn assign-to-this-table" data-table="${table.id}">Add to this table</button>
+                    </div>
+                `;
+                
+                tablesGrid.appendChild(tableCard);
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-member').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const attendeeId = this.getAttribute('data-id');
+                    if (confirm('Are you sure you want to remove this attendee from the table?')) {
+                        if (removeAttendeeFromTable(attendeeId)) {
+                            showToast('Attendee removed successfully', 'success');
+                            renderTables();
+                        } else {
+                            showToast('Failed to remove attendee', 'error');
+                        }
+                    }
+                });
+            });
+            
+            // Add event listeners to move buttons
+            document.querySelectorAll('.move-member').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const attendeeId = this.getAttribute('data-id');
+                    const attendeeName = this.getAttribute('data-name');
+                    openMoveModal(attendeeId, attendeeName);
+                });
+            });
+            
+            // Add event listeners to assign buttons
+            document.querySelectorAll('.assign-to-this-table').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tableId = this.getAttribute('data-table');
+                    document.getElementById('assignTable').value = tableId;
+                    document.getElementById('newAttendeeName').focus();
+                });
+            });
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            
+            // Set background color based on type
+            if (type === 'error') {
+                toast.style.background = '#ff6b6b';
+            } else if (type === 'success') {
+                toast.style.background = '#51cf66';
+            } else {
+                toast.style.background = 'var(--primary)';
+            }
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Open move modal
+        function openMoveModal(attendeeId, attendeeName) {
+            const modal = document.getElementById('moveModal');
+            const select = document.getElementById('newTableSelect');
+            
+            document.getElementById('moveAttendeeName').textContent = attendeeName;
+            document.getElementById('moveAttendeeId').textContent = attendeeId;
+            
+            // Populate tables dropdown
+            select.innerHTML = '';
+            db.tables.forEach(table => {
+                const option = document.createElement('option');
+                option.value = table.id;
+                option.textContent = table.name;
+                select.appendChild(option);
+            });
+            
+            // Set current table as disabled
+            const attendee = findAttendeeById(attendeeId);
+            if (attendee) {
+                const currentTableOption = select.querySelector(`option[value="${attendee.tableId}"]`);
+                if (currentTableOption) {
+                    currentTableOption.disabled = true;
+                    currentTableOption.textContent += ' (current)';
+                }
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('moveModal').style.display = 'none';
+        }
+
+        // Confetti animation
+        function initConfetti() {
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const confettiPieces = [];
+            const colors = ['#d4af37', '#ffffff', '#c0a062', '#f8f8f8', '#8b4513'];
+            
+            class ConfettiPiece {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height - canvas.height;
+                    this.size = Math.random() * 10 + 5;
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.speed = Math.random() * 3 + 1;
+                    this.angle = Math.random() * 360;
+                    this.spin = Math.random() * 10 - 5;
+                    this.shape = Math.random() > 0.5 ? 'square' : 'circle';
+                }
+                
+                update() {
+                    this.y += this.speed;
+                    this.angle += this.spin;
+                    
+                    if (this.y > canvas.height) {
+                        this.y = -this.size;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+                
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle * Math.PI / 180);
+                    ctx.fillStyle = this.color;
+                    
+                    if (this.shape === 'square') {
+                        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    
+                    ctx.restore();
+                }
+            }
+            
+            // Create confetti pieces
+            for (let i = 0; i < 100; i++) {
+                confettiPieces.push(new ConfettiPiece());
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                confettiPieces.forEach(piece => {
+                    piece.update();
+                    piece.draw();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            // Resize handler
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initDB();
+            initConfetti();
+
+            // Set the header image:
+            document.getElementById('headerImage').style.backgroundImage = "url('images/cover.jpg')";
+            
+            // Check if this is the admin page
+            if (window.location.pathname.includes('admin.html')) {
+                document.getElementById('adminPanel').style.display = 'block';
+                populateTablesDropdown(document.getElementById('assignTable'));
+                renderTables();
+            }
+            
+            // Verification button
+            document.getElementById('verifyBtn').addEventListener('click', function() {
+                const attendeeId = document.getElementById('attendeeId').value.trim();
+                if (!attendeeId) {
+                    showToast('Please enter a registration number', 'error');
+                    return;
+                }
+                
+                const attendee = findAttendeeById(attendeeId);
+                displayVerificationResult(attendee);
+            });
+            
+            // Generate ID button
+            document.getElementById('generateIdBtn').addEventListener('click', function() {
+                const name = document.getElementById('newAttendeeName').value.trim();
+                if (!name) {
+                    showToast('Please enter a name', 'error');
+                    return;
+                }
+                
+                const newId = generateId();
+                document.getElementById('generatedId').value = newId;
+                document.getElementById('generatedIdContainer').style.display = 'block';
+                
+                // Create unassigned attendee
+                db.attendees.push({
+                    id: newId,
+                    name: name,
+                    tableId: '',
+                    assigned: false
+                });
+                saveDB();
+            });
+            
+            // Assign to table button
+            document.getElementById('assignBtn').addEventListener('click', function() {
+                const attendeeId = document.getElementById('generatedId').value;
+                const tableId = document.getElementById('assignTable').value;
+                const name = document.getElementById('newAttendeeName').value.trim();
+                
+                if (!attendeeId || !tableId || !name) {
+                    showToast('Please complete all fields', 'error');
+                    return;
+                }
+                
+                if (assignAttendeeToTable(attendeeId, tableId)) {
+                    showToast(`${name} assigned to table successfully`, 'success');
+                    document.getElementById('newAttendeeName').value = '';
+                    document.getElementById('generatedId').value = '';
+                    document.getElementById('generatedIdContainer').style.display = 'none';
+                    renderTables();
+                } else {
+                    showToast('Failed to assign to table', 'error');
+                }
+            });
+            
+            // Move modal events
+            document.getElementById('confirmMoveBtn').addEventListener('click', function() {
+                const attendeeId = document.getElementById('moveAttendeeId').textContent;
+                const newTableId = document.getElementById('newTableSelect').value;
+                
+                if (moveAttendee(attendeeId, newTableId)) {
+                    showToast('Attendee moved successfully', 'success');
+                    renderTables();
+                    closeModal();
+                } else {
+                    showToast('Failed to move attendee', 'error');
+                }
+            });
+            
+            document.querySelector('.close-modal').addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === document.getElementById('moveModal')) {
+                    closeModal();
+                }
+            });
+            
+            // Allow pressing Enter in verification field
+            document.getElementById('attendeeId').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('verifyBtn').click();
+                }
+            });
+            
+            // Allow pressing Enter in name field
+            document.getElementById('newAttendeeName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('generateIdBtn').click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
